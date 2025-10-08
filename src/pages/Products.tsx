@@ -165,7 +165,7 @@ const Products = () => {
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
     { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
-    { name: "Framer-Motion",  src: "https://cdn.prod.website-files.com/63c6a35ee97bea3e121bf3f4/65ba74cfb2137dde06f7004e_6475bf9f62e9be5d41eb4eea_framer-motion.webp"},
+    { name: "Framer-Motion",  src: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ejable.com%2Ftech-corner%2Fapplication-development-and-testing%2Fframer-motion-with-react%2F&psig=AOvVaw3ff_XvX__oXH_f29ongNdj&ust=1760028776480000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLCEkKOIlZADFQAAAAAdAAAAABAL"},
     // VectorLogo.zone
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
