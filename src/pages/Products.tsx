@@ -333,7 +333,7 @@ const Products = () => {
       {/* ---- Bottom Scrolling Tech Stack (SVG icons, non-blinking) ---- */}
       <footer className="mt-6">
         {/* Thinner, sharp separator */}
-        <div className="h-[1px] bg-border/50" />
+        <div className=""w-full h-6 bg-border/50 rounded-b-full">
 
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto py-4 sm:py-5">
