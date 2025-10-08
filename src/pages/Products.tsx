@@ -165,7 +165,7 @@ const Products = () => {
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
     { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
-   // { name: "Framer-Motion",  src: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdribbble.com%2Fshots%2F13820034-Framer-Motion-Logo&psig=AOvVaw0rH69bvIpTfwl4magK2ugf&ust=1760029525708000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCICbmoiLlZADFQAAAAAdAAAAABAU"},
+    { name: "Framer-Motion",  src: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdribbble.com%2Fshots%2F13820034-Framer-Motion-Logo&psig=AOvVaw0rH69bvIpTfwl4magK2ugf&ust=1760029525708000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCICbmoiLlZADFQAAAAAdAAAAABAU"},
     // VectorLogo.zone
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
@@ -333,7 +333,7 @@ const Products = () => {
       {/* ---- Bottom Scrolling Tech Stack (SVG icons, non-blinking) ---- */}
       <footer className="mt-6">
         {/* Thinner, sharp separator */}
-        <div className=""w-full h-6 bg-border/50 rounded-b-full">
+        <div className=""w-full h-6 bg-border/50 rounded-b-full"></div>
 
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto py-4 sm:py-5">
