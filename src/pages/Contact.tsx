@@ -374,7 +374,7 @@ const Contact = () => {
                   <Clock className="h-8 w-8 text-primary mx-auto mb-2" />
                   <h4 className="font-semibold mb-2">Quick Response Time</h4>
                   <p className="text-sm text-muted-foreground">
-                    We typically respond within 2–4 hours during business hours.
+                    We typically respond within 24 hours during business hours.
                   </p>
                 </CardContent>
               </Card>
