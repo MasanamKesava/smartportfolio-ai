@@ -165,6 +165,7 @@ const Products = () => {
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
     { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
+    { name: "Framer-Motion",  src: "https://cdn.prod.website-files.com/63c6a35ee97bea3e121bf3f4/65ba74cfb2137dde06f7004e_6475bf9f62e9be5d41eb4eea_framer-motion.webp"},
     // VectorLogo.zone
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
