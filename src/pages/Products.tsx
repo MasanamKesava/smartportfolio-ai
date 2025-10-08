@@ -165,7 +165,7 @@ const Products = () => {
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
     { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
-    { name: "Framer-Motion",  src: "https://imgs.search.brave.com/QECHsP67uMQfM1uAKwnrnH5clyBxLi6fiSg2NT8cxpU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wYWdl/cHJvLmNvL2Jsb2cv/d3AtY29udGVudC93/ZWJwLWV4cHJlc3Mv/d2VicC1pbWFnZXMv/dXBsb2Fkcy8yMDIw/LzAzL2ZyYW1lci1t/b3Rpb24ucG5nLndl/YnA"},
+    { name: "Framer-Motion",  src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png"},
     // VectorLogo.zone
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
@@ -333,7 +333,7 @@ const Products = () => {
       {/* ---- Bottom Scrolling Tech Stack (SVG icons, non-blinking) ---- */}
       <footer className="mt-6">
         {/* Thinner, sharp separator */}
-        <div className="w-full h-6 bg-border/50 rounded-b-full"></div>
+        <div className="h-[1px] bg-border/50"></div>
 
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto py-4 sm:py-5">
