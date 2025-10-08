@@ -160,7 +160,7 @@ const Products = () => {
     { name: "Next.js",        src: "https://cdn.simpleicons.org/nextdotjs" },
     //{ name: "Nuxt.js",        src: "https://cdn.simpleicons.org/nuxtdotjs" },
     { name: "Tailwind CSS",   src: "https://cdn.simpleicons.org/tailwindcss" },
-    { name: "Vercel",         src: "https://cdn.simpleicons.org/vercel" },
+    
     { name: "npm",            src: "https://cdn.simpleicons.org/npm" },
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
@@ -168,6 +168,7 @@ const Products = () => {
     { name: "Framer-Motion",  src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png"},
     // VectorLogo.zone
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
+    { name: "Vercel",         src: "https://cdn.simpleicons.org/vercel" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
     // Devicon
     { name: "React",          src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
