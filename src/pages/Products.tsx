@@ -1,23 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  ExternalLink,
-  Globe,
-  Code,
-  Briefcase,
-  GraduationCap,
-} from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 
 /**
- * Final version — normal default scrollbar restored.
+ * Final version — normal default scrollbar, no categories anywhere.
  */
 
 const Products = () => {
-  // Normalized styles (no scrollbar overrides)
+  // Styles (no scrollbar overrides)
   const styles = `
   :root { --marquee-speed: 28s; }
 
@@ -66,7 +59,6 @@ const Products = () => {
       id: 1,
       name: "Harshini",
       role: "Senior Full Stack .NET Developer",
-      //category: "Web Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_190348_vxdg1q.png",
       description:
@@ -91,7 +83,6 @@ const Products = () => {
       id: 2,
       name: "Priya",
       role: "Database Administrator",
-     // category: "Database Administration",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_191227_h0buvi.png",
       description:
@@ -113,7 +104,6 @@ const Products = () => {
       id: 3,
       name: "Sai Ram",
       role: "Frontend Developer",
-     // category: "Frontend Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_192257_lizxnw.png",
       description:
@@ -126,7 +116,6 @@ const Products = () => {
       id: 4,
       name: "Kathyaini",
       role: "Senior Full Stack .NET Developer",
-      //category: "Web Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758571812/Screenshot_2025-09-23_013946_bhb3ja.png",
       description:
@@ -144,19 +133,6 @@ const Products = () => {
       live: "https://harshini-adusumilli-tvgd.bolt.host/",
       gradient: "from-blue-500 to-purple-600",
     },
-  ];
-
-  const counts = portfolioSamples.reduce<Record<string, number>>((acc, p) => {
-    acc.All = (acc.All || 0) + 1;
-    acc[p.category] = (acc[p.category] || 0) + 1;
-    return acc;
-  }, {});
-
-  const categories = [
-    { name: "All", icon: <Globe className="h-4 w-4" />, count: counts.All || 0 },
-    { name: "Web Development", icon: <Code className="h-4 w-4" />, count: counts["Web Development"] || 0 },
-    { name: "Database Administration", icon: <Briefcase className="h-4 w-4" />, count: counts["Database Administration"] || 0 },
-    { name: "Frontend Development", icon: <GraduationCap className="h-4 w-4" />, count: counts["Frontend Development"] || 0 },
   ];
 
   const normalizeUrl = (url: string) => (url?.startsWith("http") ? url : `https://${url}`);
@@ -212,25 +188,6 @@ const Products = () => {
           </div>
         </section>
 
-        {/* Filters */}
-        <section className="px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
-              <Button
-                key={category.name}
-                variant={index === 0 ? "default" : "outline"}
-                className={`glass-button ${index === 0 ? "bg-gradient-primary text-white" : ""}`}
-              >
-                {category.icon}
-                <span className="ml-2">{category.name}</span>
-                <Badge variant="secondary" className="ml-2">
-                  {category.count}
-                </Badge>
-              </Button>
-            ))}
-          </div>
-        </section>
-
         {/* Portfolio Cards */}
         <section className="px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -250,21 +207,17 @@ const Products = () => {
                 <CardHeader className="p-6 text-center">
                   <CardTitle className="text-2xl font-bold mb-2">{portfolio.name}</CardTitle>
                   <p className="text-muted-foreground text-lg mb-3">{portfolio.role}</p>
-                  <Badge variant="secondary" className="text-sm px-3 py-1">
-                    {portfolio.category}
-                  </Badge>
                 </CardHeader>
                 <CardContent className="p-6 pt-0">
                   <p className="text-muted-foreground mb-6 text-center">{portfolio.description}</p>
                   <div className="flex flex-wrap gap-2 mb-8 justify-center">
                     {portfolio.technologies.map((tech, index) => (
-                      <Badge
+                      <span
                         key={`${portfolio.id}-${tech}-${index}`}
-                        variant="outline"
-                        className="glass-button border-primary/20 text-primary"
+                        className="inline-flex items-center rounded-full border border-primary/20 text-primary px-3 py-1 text-sm glass-button"
                       >
                         {tech}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                   <div className="flex space-x-3 justify-center">
@@ -344,11 +297,12 @@ const Products = () => {
             </div>
           </div>
         </div>
+
         <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  * prices may vary according to the style and size of the portfolio.
-                </p>
-              </div>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            * prices may vary according to the style and size of the portfolio.
+          </p>
+        </div>
       </section>
     </div>
   );
