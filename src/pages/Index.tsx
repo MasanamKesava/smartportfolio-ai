@@ -146,6 +146,9 @@ const Index = () => {
           box-shadow:
             0 0 0 8px rgba(124, 58, 237, 0.16),
             0 18px 40px rgba(124, 58, 237, 0.28);
+            
+         .scrollbar-hidden { scrollbar-width: none; }
+         .scrollbar-hidden::-webkit-scrollbar { display: none; }
         }
       `}</style>
       {/* Hero Section */}
