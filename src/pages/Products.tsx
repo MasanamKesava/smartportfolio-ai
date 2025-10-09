@@ -12,7 +12,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 
+/**
+ * Notes:
+ * - Marquee is rebuilt to avoid "blinking"/jumping by using two identical groups
+ *   and animating the track from 0% to -50% with translate3d for GPU stability.
+ * - Added elegant scrollbars (global) + utility class `.scrollbar-elegant` you can apply to any overflow area.
+ */
+
 const Products = () => {
+  // ---- Stable marquee + Elegant scrollbar theme ----
   const styles = `
   :root { --marquee-speed: 28s; }
 
@@ -37,68 +45,97 @@ const Products = () => {
     animation: marquee-scroll var(--marquee-speed) linear infinite;
   }
 
+  .marquee__item {
+    transition: transform 200ms ease, opacity 200ms ease, filter 200ms ease;
+  }
   .marquee__item img {
-    filter: grayscale(25%);
+    filter: grayscale(20%);
     opacity: 0.9;
     transition: transform 200ms ease, filter 200ms ease, opacity 200ms ease;
   }
   .marquee__item:hover img {
     filter: grayscale(0%);
     opacity: 1;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
   }
 
-  /* ---- Scrollbar Theme ---- */
-  .scroll-theme {
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+  }
+
+  /* ---------------- Elegant Scrollbar Theme ----------------
+     - Subtle, rounded thumb with inner gap via box-shadow (not fully closed)
+     - Transparent track with faint inset edge
+     - Works globally and via .scrollbar-elegant
+  ---------------------------------------------------------- */
+
+  /* Firefox (global) */
+  html, body, .scrollbar-elegant {
     scrollbar-width: thin;
-    scrollbar-color: var(--sb-thumb) transparent;
+    scrollbar-color: color-mix(in oklab, currentColor 20%, transparent) transparent;
   }
 
-  :root{
-    --sb-thumb: rgba(139, 92, 246, 0.9);  /* purple */
-    --sb-thumb-2: rgba(59, 130, 246, 0.9); /* blue */
-    --sb-track: transparent;
-    --sb-rail: rgba(255,255,255,0.1);
-  }
-
-  .scroll-theme::-webkit-scrollbar{
+  /* WebKit (global) */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .scrollbar-elegant::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
-  .scroll-theme::-webkit-scrollbar-track{
-    background: var(--sb-track);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-    border-radius: 9999px;
-    margin: 4px;
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track,
+  .scrollbar-elegant::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 999px;
+    /* faint inset edge so it doesn't look closed */
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, currentColor 8%, transparent);
   }
-  .scroll-theme::-webkit-scrollbar-thumb{
-    border-radius: 9999px;
-    background: linear-gradient(180deg, var(--sb-thumb), var(--sb-thumb-2));
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  .scrollbar-elegant::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    /* create inner gap using box-shadow to avoid a "sealed" bar look */
+    box-shadow:
+      inset 0 0 0 6px color-mix(in oklab, currentColor 20%, transparent);
+    background-clip: content-box;
+    background: color-mix(in oklab, currentColor 28%, transparent);
   }
-  .scroll-theme::-webkit-scrollbar-thumb:hover{
-    filter: saturate(1.15);
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover,
+  .scrollbar-elegant::-webkit-scrollbar-thumb:hover {
+    box-shadow:
+      inset 0 0 0 5px color-mix(in oklab, currentColor 30%, transparent);
+    background: color-mix(in oklab, currentColor 38%, transparent);
+  }
+  html::-webkit-scrollbar-corner,
+  body::-webkit-scrollbar-corner,
+  .scrollbar-elegant::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
-  /* ---- Compact Section Helpers ---- */
-  .section-tight-y {
-    padding-top: clamp(1.5rem, 2vw, 2.5rem);
-    padding-bottom: clamp(1.5rem, 2vw, 2.5rem);
-  }
-  .section-gap-tight {
-    margin-top: clamp(1.25rem, 1.5vw, 2rem);
-  }
-
-  /* ---- Marquee Label ---- */
-  .marquee__label {
-    font-size: 0.85rem;
-    line-height: 1.25;
-    font-weight: 500;
-    color: hsl(var(--foreground) / 0.9);
-    letter-spacing: -0.01em;
-  }
-  @media (min-width: 768px){
-    .marquee__label{ font-size: 0.95rem; }
+  /* Optional: stronger contrast in dark mode */
+  @media (prefers-color-scheme: dark) {
+    html, body, .scrollbar-elegant {
+      scrollbar-color: color-mix(in oklab, white 18%, transparent) transparent;
+    }
+    html::-webkit-scrollbar-track,
+    body::-webkit-scrollbar-track,
+    .scrollbar-elegant::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, white 8%, transparent);
+    }
+    html::-webkit-scrollbar-thumb,
+    body::-webkit-scrollbar-thumb,
+    .scrollbar-elegant::-webkit-scrollbar-thumb {
+      box-shadow: inset 0 0 0 6px color-mix(in oklab, white 22%, transparent);
+      background: color-mix(in oklab, white 26%, transparent);
+    }
+    html::-webkit-scrollbar-thumb:hover,
+    body::-webkit-scrollbar-thumb:hover,
+    .scrollbar-elegant::-webkit-scrollbar-thumb:hover {
+      box-shadow: inset 0 0 0 5px color-mix(in oklab, white 34%, transparent);
+      background: color-mix(in oklab, white 36%, transparent);
+    }
   }
   `;
 
@@ -111,19 +148,22 @@ const Products = () => {
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_190348_vxdg1q.png",
       description:
-        "Modern dark theme portfolio with hexagonal profile image and clean layout.",
+        "Modern dark theme portfolio with hexagonal profile image and clean layout. Features responsive design and smooth animations.",
       technologies: [
         "React",
         "Node.js",
         "MongoDB",
         ".NET 8",
         "ASP.NET",
+        "Angular",
         "C#",
         "Azure",
         "Kafka",
         "EF Core",
+        "OAuth2",
       ],
       live: "https://harshini-adusumilli-portfolio.vercel.app/",
+      gradient: "from-blue-500 to-purple-600",
     },
     {
       id: 2,
@@ -133,12 +173,58 @@ const Products = () => {
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_191227_h0buvi.png",
       description:
-        "Creative portfolio showcasing design projects with interactive elements.",
-      technologies: ["Python", "SQL", "Hadoop", "Hive", "Spark"],
+        "Creative and colorful portfolio showcasing design projects with interactive elements and beautiful typography.",
+      technologies: [
+        "Python",
+        "SQL",
+        "Hadoop",
+        "Hive",
+        "Spark",
+        "Pandas",
+        "Numpy",
+        "Matplotlib",
+      ],
       live: "vamsiportfoliowebsite.netlify.app",
+      gradient: "from-green-500 to-teal-600",
+    },
+    {
+      id: 3,
+      name: "Sai Ram",
+      role: "Frontend Developer",
+      category: "Frontend Development",
+      image:
+        "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_192257_lizxnw.png",
+      description:
+        "Clean minimalist portfolio with professional presentation and smooth user experience. Perfect for showcasing web projects.",
+      technologies: ["Python", "C Programming", "HTML", "CSS"],
+      live: "https://statuesque-yeot-c24296.netlify.app/",
+      gradient: "from-pink-500 to-rose-600",
+    },
+    {
+      id: 4,
+      name: "Kathyaini",
+      role: "Senior Full Stack .NET Developer",
+      category: "Web Development",
+      image:
+        "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758571812/Screenshot_2025-09-23_013946_bhb3ja.png",
+      description:
+        "Modern dark theme portfolio with hexagonal profile image and clean layout. Features responsive design and smooth animations.",
+      technologies: [
+        "React",
+        "Node.js",
+        "MongoDB",
+        ".NET 8",
+        "ASP.NET",
+        "C#",
+        "Kafka",
+        "EF Core",
+      ],
+      live: "https://harshini-adusumilli-tvgd.bolt.host/",
+      gradient: "from-blue-500 to-purple-600",
     },
   ];
 
+  // Dynamic category counts
   const counts = portfolioSamples.reduce<Record<string, number>>((acc, p) => {
     acc.All = (acc.All || 0) + 1;
     acc[p.category] = (acc[p.category] || 0) + 1;
@@ -149,149 +235,269 @@ const Products = () => {
     { name: "All", icon: <Globe className="h-4 w-4" />, count: counts.All || 0 },
     { name: "Web Development", icon: <Code className="h-4 w-4" />, count: counts["Web Development"] || 0 },
     { name: "Database Administration", icon: <Briefcase className="h-4 w-4" />, count: counts["Database Administration"] || 0 },
+    { name: "Frontend Development", icon: <GraduationCap className="h-4 w-4" />, count: counts["Frontend Development"] || 0 },
   ];
 
-  const normalizeUrl = (url: string) =>
-    url?.startsWith("http") ? url : `https://${url}`;
+  const normalizeUrl = (url: string) => (url?.startsWith("http") ? url : `https://${url}`);
 
-  const techList = [
-    { name: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs" },
-    { name: "Tailwind", src: "https://cdn.simpleicons.org/tailwindcss" },
-    { name: "Vite", src: "https://cdn.simpleicons.org/vite" },
-    { name: "React Router", src: "https://cdn.simpleicons.org/reactrouter" },
-    { name: "GitHub", src: "https://cdn.simpleicons.org/github" },
-    { name: "Framer Motion", src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png" },
-    { name: "Netlify", src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
-    { name: "Vercel", src: "https://cdn.simpleicons.org/vercel" },
-    { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+  type TechItem = { name: string; src: string };
+  const techList: TechItem[] = [
+    { name: "Next.js",        src: "https://cdn.simpleicons.org/nextdotjs" },
+    { name: "Tailwind CSS",   src: "https://cdn.simpleicons.org/tailwindcss" },
+    { name: "npm",            src: "https://cdn.simpleicons.org/npm" },
+    { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
+    { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
+    { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
+    { name: "Framer Motion",  src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png"},
+    { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
+    { name: "Vercel",         src: "https://cdn.simpleicons.org/vercel" },
+    { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
+    { name: "React",          src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+    { name: "Node.js",        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+    { name: "TypeScript",     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   ];
 
   return (
-    <div className="min-h-screen scroll-theme">
+    <div className="min-h-screen">
       <Navbar />
       <style>{styles}</style>
 
-      {/* Header */}
-      <section className="section-tight-y px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-            Portfolio Samples
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto">
-            Explore real student portfolios that helped them land top roles.
-          </p>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="px-4 sm:px-6 lg:px-8 section-gap-tight">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4">
-          {categories.map((category, index) => (
-            <Button
-              key={category.name}
-              variant={index === 0 ? "default" : "outline"}
-              className={`glass-button ${
-                index === 0 ? "bg-gradient-primary text-white" : ""
-              }`}
-            >
-              {category.icon}
-              <span className="ml-2">{category.name}</span>
-              <Badge variant="secondary" className="ml-2">
-                {category.count}
-              </Badge>
-            </Button>
-          ))}
-        </div>
-      </section>
-
-      {/* Portfolio Cards */}
-      <section className="px-4 sm:px-6 lg:px-8 section-gap-tight">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-          {portfolioSamples.map((p) => (
-            <Card key={p.id} className="glass-card border-0 hover-glow group overflow-hidden">
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <CardHeader className="p-6 text-center">
-                <CardTitle className="text-2xl font-bold">{p.name}</CardTitle>
-                <p className="text-muted-foreground">{p.role}</p>
-              </CardHeader>
-              <CardContent className="p-6 pt-0 text-center">
-                <p className="text-muted-foreground mb-4">{p.description}</p>
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  {p.technologies.map((t, i) => (
-                    <Badge key={i} variant="outline" className="text-primary border-primary/20">
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-                <Button variant="outline" size="icon" asChild className="glass-button">
-                  <a href={normalizeUrl(p.live)} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Tools Used */}
-      <section className="section-gap-tight">
-        <div className="h-px bg-border/50"></div>
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto py-10 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4">
-              Tools Used
-            </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6">
-              A refined modern stack powering these portfolios.
+      <div className="pt-20 pb-0">
+        {/* Header Section */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+              Portfolio Samples
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Explore our collection of professionally designed portfolios that
+              have helped students land their dream jobs at top companies.
             </p>
 
+            {/* Reference Drive Link */}
+            <div className="glass-card p-6 rounded-2xl max-w-2xl mx-auto mb-12">
+              <h3 className="text-xl font-semibold mb-4">📁 500+ Reference Portfolios Available</h3>
+              <p className="text-muted-foreground mb-4">
+                Access our complete collection of portfolio templates and resume samples
+              </p>
+              <Button asChild className="bg-gradient-primary hover:opacity-90 text-white shadow-glow">
+                <a
+                  href="https://drive.google.com/drive/folders/1SxebnMofr8TcnM2eDkcMIxGcQG0Y-0uC?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  View All References (Google Drive)
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Category Filters */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-4">
+              {categories.map((category, index) => (
+                <Button
+                  key={category.name}
+                  variant={index === 0 ? "default" : "outline"}
+                  className={`glass-button ${index === 0 ? "bg-gradient-primary text-white" : ""}`}
+                >
+                  {category.icon}
+                  <span className="ml-2">{category.name}</span>
+                  <Badge variant="secondary" className="ml-2">
+                    {category.count}
+                  </Badge>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Portfolio Grid */}
+        <section className="px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {portfolioSamples.map((portfolio) => (
+                <Card
+                  key={portfolio.id}
+                  className="glass-card border-0 hover-lift hover-glow group overflow-hidden h-[600px]"
+                >
+                  {/* Portfolio Preview Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={portfolio.image}
+                      alt={`${portfolio.name} preview`}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        const el = e.currentTarget as HTMLImageElement;
+                        el.onerror = null;
+                        el.src = "https://via.placeholder.com/1200x600?text=Portfolio+Preview";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
+                  </div>
+
+                  <CardHeader className="p-6">
+                    <div className="text-center">
+                      <CardTitle className="text-2xl font-bold mb-2">{portfolio.name}</CardTitle>
+                      <p className="text-muted-foreground text-lg mb-3">{portfolio.role}</p>
+                      <Badge variant="secondary" className="text-sm px-3 py-1">
+                        {portfolio.category}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6 pt-0">
+                    <p className="text-muted-foreground mb-6 text-center">{portfolio.description}</p>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2 mb-8 justify-center">
+                      {portfolio.technologies.map((tech, index) => (
+                        <Badge
+                          key={`${portfolio.id}-${tech}-${index}`}
+                          variant="outline"
+                          className="glass-button border-primary/20 text-primary"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex space-x-3">
+                      <Link to={`/sample-portfolio/${portfolio.id}`} className="flex-1">
+                        {/* Optional 'View Portfolio' button could go here */}
+                      </Link>
+                      <Button variant="outline" size="icon" asChild className="glass-button">
+                        <a
+                          href={normalizeUrl(portfolio.live)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${portfolio.name} live site`}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 mt-16">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="glass-card p-12 rounded-3xl">
+              <h2 className="text-4xl font-bold mb-6">Ready to Create Your Portfolio?</h2>
+              <p className="text-xl text-muted-foreground mb-8">
+                Get started with our AI-powered platform and create a portfolio that stands out.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/contact">
+                  <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-white shadow-glow text-lg px-8 py-4">
+                    Get Custom Portfolio
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* ---- Tools Used (kept from previous reply, unchanged structure) ---- */}
+      <section className="mt-8 sm:mt-10 lg:mt-12">
+        <div className="h-px bg-border/50"></div>
+
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto py-10 sm:py-12">
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium glass-card border border-border/50 text-muted-foreground mb-3">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500" />
+                Stack
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                Tools Used
+              </h2>
+              <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+                A modern toolkit that powers fast, reliable, and beautiful portfolios.
+              </p>
+            </div>
+
             <div className="glass-card rounded-3xl ring-1 ring-border/30 shadow-glow">
-              <div className="marquee relative rounded-3xl overflow-hidden">
-                <div className="marquee__track py-5 sm:py-6">
-                  <div className="flex items-center gap-8 sm:gap-10 pr-8 sm:pr-10">
+              <div className="relative marquee rounded-3xl overflow-hidden">
+                <div
+                  className="marquee__track py-5 sm:py-6 md:py-7"
+                  aria-label="Scrolling list of technologies used (SVG icons)"
+                >
+                  {/* Group 1 */}
+                  <div className="flex items-center gap-8 sm:gap-10 md:gap-12 pr-8 sm:pr-10 md:pr-12">
                     {techList.map((t) => (
-                      <div key={`g1-${t.name}`} className="marquee__item inline-flex items-center gap-3">
+                      <div
+                        key={`g1-${t.name}`}
+                        className="marquee__item inline-flex items-center gap-3 sm:gap-4 md:gap-5"
+                        title={t.name}
+                      >
                         <img
                           src={t.src}
                           alt={t.name}
-                          className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
+                          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain"
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => {
+                            const el = e.currentTarget as HTMLImageElement;
+                            el.onerror = null;
+                            el.src =
+                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='100%25' height='100%25' fill='%23eee'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='14' fill='%23999'%3EICON%3C/text%3E%3C/svg%3E";
+                          }}
                         />
-                        <span className="marquee__label">{t.name}</span>
+                        <span className="text-sm sm:text-base font-medium tracking-tight text-foreground/90">
+                          {t.name}
+                        </span>
                       </div>
                     ))}
                   </div>
+                  {/* Group 2 */}
                   <div
-                    className="flex items-center gap-8 sm:gap-10 pr-8 sm:pr-10"
+                    className="flex items-center gap-8 sm:gap-10 md:gap-12 pr-8 sm:pr-10 md:pr-12"
                     aria-hidden="true"
                   >
                     {techList.map((t) => (
-                      <div key={`g2-${t.name}`} className="marquee__item inline-flex items-center gap-3">
+                      <div
+                        key={`g2-${t.name}`}
+                        className="marquee__item inline-flex items-center gap-3 sm:gap-4 md:gap-5"
+                      >
                         <img
                           src={t.src}
                           alt={t.name}
-                          className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
+                          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain"
+                          loading="lazy"
+                          decoding="async"
                         />
-                        <span className="marquee__label">{t.name}</span>
+                        <span className="text-sm sm:text-base font-medium tracking-tight text-foreground/90">
+                          {t.name}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 border-t border-border/30 text-xs text-muted-foreground">
-                Icons shown for reference — your project includes only used tools.
+
+              <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  Icons shown for reference — your final build ships only the libraries you use.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      {/* ---- /Tools Used ---- */}
     </div>
   );
 };
