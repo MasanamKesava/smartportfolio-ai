@@ -330,7 +330,7 @@ const Products = () => {
           </div>
         </section>
       </div>
-
+<h1>Tools Used</h1>
       {/* ---- Bottom Scrolling Tech Stack (SVG icons, non-blinking) ---- */}
       <footer className="mt-6">
         {/* Thinner, sharp separator */}
