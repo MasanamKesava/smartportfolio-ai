@@ -14,13 +14,12 @@ import Navbar from "@/components/Navbar";
 
 /**
  * Notes:
- * - Marquee is rebuilt to avoid "blinking"/jumping by using two identical groups
- *   and animating the track from 0% to -50% with translate3d for GPU stability.
- * - Added elegant scrollbars (global) + utility class `.scrollbar-elegant` you can apply to any overflow area.
+ * - Marquee avoids jumping by using two identical groups and translate3d.
+ * - Global CSS at the end hides the vertical scrollbar but preserves scrolling.
  */
 
 const Products = () => {
-  // ---- Stable marquee + Elegant scrollbar theme ----
+  // ---- Styles: marquee + (at the end) hide side scrollbar globally ----
   const styles = `
   :root { --marquee-speed: 28s; }
 
@@ -59,83 +58,20 @@ const Products = () => {
     transform: translateY(-2px);
   }
 
-  /* Respect reduced motion */
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; }
   }
 
-  /* ---------------- Elegant Scrollbar Theme ----------------
-     - Subtle, rounded thumb with inner gap via box-shadow (not fully closed)
-     - Transparent track with faint inset edge
-     - Works globally and via .scrollbar-elegant
-  ---------------------------------------------------------- */
-
-  /* Firefox (global) */
-  html, body, .scrollbar-elegant {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklab, currentColor 20%, transparent) transparent;
+  /* ---------------- Hide the side (vertical) scrollbar globally ---------------- */
+  html,
+  body {
+    overflow-y: scroll;        /* keep layout stable & allow scroll */
+    scrollbar-width: none;     /* Firefox: hide */
   }
-
-  /* WebKit (global) */
   html::-webkit-scrollbar,
-  body::-webkit-scrollbar,
-  .scrollbar-elegant::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  html::-webkit-scrollbar-track,
-  body::-webkit-scrollbar-track,
-  .scrollbar-elegant::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 999px;
-    /* faint inset edge so it doesn't look closed */
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, currentColor 8%, transparent);
-  }
-  html::-webkit-scrollbar-thumb,
-  body::-webkit-scrollbar-thumb,
-  .scrollbar-elegant::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    /* create inner gap using box-shadow to avoid a "sealed" bar look */
-    box-shadow:
-      inset 0 0 0 6px color-mix(in oklab, currentColor 20%, transparent);
-    background-clip: content-box;
-    background: color-mix(in oklab, currentColor 28%, transparent);
-  }
-  html::-webkit-scrollbar-thumb:hover,
-  body::-webkit-scrollbar-thumb:hover,
-  .scrollbar-elegant::-webkit-scrollbar-thumb:hover {
-    box-shadow:
-      inset 0 0 0 5px color-mix(in oklab, currentColor 30%, transparent);
-    background: color-mix(in oklab, currentColor 38%, transparent);
-  }
-  html::-webkit-scrollbar-corner,
-  body::-webkit-scrollbar-corner,
-  .scrollbar-elegant::-webkit-scrollbar-corner {
-    background: transparent;
-  }
-
-  /* Optional: stronger contrast in dark mode */
-  @media (prefers-color-scheme: dark) {
-    html, body, .scrollbar-elegant {
-      scrollbar-color: color-mix(in oklab, white 18%, transparent) transparent;
-    }
-    html::-webkit-scrollbar-track,
-    body::-webkit-scrollbar-track,
-    .scrollbar-elegant::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 0 1px color-mix(in oklab, white 8%, transparent);
-    }
-    html::-webkit-scrollbar-thumb,
-    body::-webkit-scrollbar-thumb,
-    .scrollbar-elegant::-webkit-scrollbar-thumb {
-      box-shadow: inset 0 0 0 6px color-mix(in oklab, white 22%, transparent);
-      background: color-mix(in oklab, white 26%, transparent);
-    }
-    html::-webkit-scrollbar-thumb:hover,
-    body::-webkit-scrollbar-thumb:hover,
-    .scrollbar-elegant::-webkit-scrollbar-thumb:hover {
-      box-shadow: inset 0 0 0 5px color-mix(in oklab, white 34%, transparent);
-      background: color-mix(in oklab, white 36%, transparent);
-    }
+  body::-webkit-scrollbar {
+    display: none;             /* Chrome, Edge, Safari: hide */
   }
   `;
 
@@ -410,7 +346,7 @@ const Products = () => {
         </section>
       </div>
 
-      {/* ---- Tools Used (kept from previous reply, unchanged structure) ---- */}
+      {/* ---- Tools Used ---- */}
       <section className="mt-8 sm:mt-10 lg:mt-12">
         <div className="h-px bg-border/50"></div>
 
@@ -462,7 +398,7 @@ const Products = () => {
                       </div>
                     ))}
                   </div>
-                  {/* Group 2 */}
+                  {/* Group 2 (duplicate for seamless loop) */}
                   <div
                     className="flex items-center gap-8 sm:gap-10 md:gap-12 pr-8 sm:pr-10 md:pr-12"
                     aria-hidden="true"
