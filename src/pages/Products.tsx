@@ -66,7 +66,7 @@ const Products = () => {
       id: 1,
       name: "Harshini",
       role: "Senior Full Stack .NET Developer",
-      category: "Web Development",
+      //category: "Web Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_190348_vxdg1q.png",
       description:
@@ -91,7 +91,7 @@ const Products = () => {
       id: 2,
       name: "Priya",
       role: "Database Administrator",
-      category: "Database Administration",
+     // category: "Database Administration",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_191227_h0buvi.png",
       description:
@@ -113,7 +113,7 @@ const Products = () => {
       id: 3,
       name: "Sai Ram",
       role: "Frontend Developer",
-      category: "Frontend Development",
+     // category: "Frontend Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758568659/Screenshot_2025-09-18_192257_lizxnw.png",
       description:
@@ -126,7 +126,7 @@ const Products = () => {
       id: 4,
       name: "Kathyaini",
       role: "Senior Full Stack .NET Developer",
-      category: "Web Development",
+      //category: "Web Development",
       image:
         "https://res.cloudinary.com/dswrgvg3c/image/upload/v1758571812/Screenshot_2025-09-23_013946_bhb3ja.png",
       description:
@@ -339,6 +339,11 @@ const Products = () => {
               <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   Icons shown for reference — your final build ships only the libraries you use.
+                </p>
+              </div>
+              <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  * prices may vary according to the style and size of the portfolio.
                 </p>
               </div>
             </div>
