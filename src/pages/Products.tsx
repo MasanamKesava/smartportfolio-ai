@@ -330,7 +330,21 @@ const Products = () => {
           </div>
         </section>
       </div>
-<h1>Tools Used</h1>
+<div className="px-4 sm:px-6 lg:px-8 py-12">  <!-- Added py-12 for vertical spacing -->
+   <div className="max-w-7xl mx-auto">
+     {/* Tools Used Heading */}
+     <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+       Tools Used
+     </h2>
+
+     {/* Marquee Section */}
+     <div className="glass-card rounded-3xl p-6">  <!-- Added glass card and padding -->
+       <div className="relative marquee rounded-2xl overflow-hidden ring-1 ring-border/20 bg-muted/30">
+         ... [existing marquee content] ...
+       </div>
+     </div>
+   </div>
+ </div>
       {/* ---- Bottom Scrolling Tech Stack (SVG icons, non-blinking) ---- */}
       <footer className="mt-6">
         {/* Thinner, sharp separator */}
