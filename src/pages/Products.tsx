@@ -16,11 +16,12 @@ import Navbar from "@/components/Navbar";
  * Notes:
  * - Marquee is rebuilt to avoid "blinking"/jumping by using two identical groups
  *   and animating the track from 0% to -50% with translate3d for GPU stability.
- * - Icons are SVG from multiple sources; all rendered at a consistent size.
+ * - Icons are SVG from multiple sources; all rendered at a slightly smaller size.
+ * - If you want local SVGs, replace `src` with your imported URL (e.g., import nextLogo from "@/assets/next.svg").
  */
 
 const Products = () => {
-  // ---- Stable, non-blinking marquee styles + small tweaks for typography/hover ----
+  // ---- Stable, non-blinking marquee styles ----
   const styles = `
   :root { --marquee-speed: 28s; }
 
@@ -38,25 +39,11 @@ const Products = () => {
 
   .marquee__track {
     display: flex;
-    width: max-content;
+    width: max-content; /* ensures content width fits its children */
     will-change: transform;
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
     animation: marquee-scroll var(--marquee-speed) linear infinite;
-  }
-
-  .marquee__item {
-    transition: transform 200ms ease, opacity 200ms ease, filter 200ms ease;
-  }
-  .marquee__item img {
-    filter: grayscale(20%);
-    opacity: 0.9;
-    transition: transform 200ms ease, filter 200ms ease, opacity 200ms ease;
-  }
-  .marquee__item:hover img {
-    filter: grayscale(0%);
-    opacity: 1;
-    transform: translateY(-2px);
   }
 
   /* Respect reduced motion */
@@ -166,15 +153,17 @@ const Products = () => {
 
   const normalizeUrl = (url: string) => (url?.startsWith("http") ? url : `https://${url}`);
 
+  // Vector SVG icons (uniform size). Replace with local SVGs if desired.
   type TechItem = { name: string; src: string };
   const techList: TechItem[] = [
+    // Simple Icons
     { name: "Next.js",        src: "https://cdn.simpleicons.org/nextdotjs" },
     { name: "Tailwind CSS",   src: "https://cdn.simpleicons.org/tailwindcss" },
     { name: "npm",            src: "https://cdn.simpleicons.org/npm" },
     { name: "Vite",           src: "https://cdn.simpleicons.org/vite" },
     { name: "React Router",   src: "https://cdn.simpleicons.org/reactrouter" },
     { name: "GitHub",         src: "https://cdn.simpleicons.org/github" },
-    { name: "Framer Motion",  src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png"},
+    { name: "Framer-Motion",  src: "https://tsh.io/wp-content/uploads/fly-images/32664/framer-motion-logo-1-312x211.png"},
     { name: "Netlify",        src: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
     { name: "Vercel",         src: "https://cdn.simpleicons.org/vercel" },
     { name: "VS Code",        src: "https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" },
@@ -186,6 +175,8 @@ const Products = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
+
+      {/* Inject local styles for marquee */}
       <style>{styles}</style>
 
       <div className="pt-20 pb-0">
@@ -336,98 +327,85 @@ const Products = () => {
         </section>
       </div>
 
-      {/* ---- Tools Used (restyled to match page) ---- */}
-      <section className="mt-8 sm:mt-10 lg:mt-12">
-        {/* Thinner, sharp separator */}
-        <div className="h-px bg-border/50"></div>
+      {/* ---- Tools Used Section ---- */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/20">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+              Tools & Technologies
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Built with modern tools and frameworks to ensure high performance, 
+              scalability, and exceptional user experience
+            </p>
+          </div>
 
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto py-10 sm:py-12">
-            {/* Header */}
-            <div className="text-center mb-6 sm:mb-8">
-              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium glass-card border border-border/50 text-muted-foreground mb-3">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500" />
-                Stack
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                Tools Used
-              </h2>
-              <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                A modern toolkit that powers fast, reliable, and beautiful portfolios.
-              </p>
-            </div>
-
-            {/* Glass marquee card */}
-            <div className="glass-card rounded-3xl ring-1 ring-border/30 shadow-glow">
-              <div className="relative marquee rounded-3xl overflow-hidden">
-                <div
-                  className="marquee__track py-5 sm:py-6 md:py-7"
-                  aria-label="Scrolling list of technologies used (SVG icons)"
-                >
-                  {/* Group 1 */}
-                  <div className="flex items-center gap-8 sm:gap-10 md:gap-12 pr-8 sm:pr-10 md:pr-12">
-                    {techList.map((t) => (
-                      <div
-                        key={`g1-${t.name}`}
-                        className="marquee__item inline-flex items-center gap-3 sm:gap-4 md:gap-5"
-                        title={t.name}
-                      >
+          {/* Marquee Container */}
+          <div className="glass-card rounded-3xl p-8 border-0 hover-glow">
+            <div className="relative marquee rounded-2xl overflow-hidden ring-1 ring-border/20 bg-background/50">
+              <div
+                className="marquee__track py-6 sm:py-8"
+                aria-label="Scrolling list of technologies used (SVG icons)"
+              >
+                {/* Group 1 */}
+                <div className="flex items-center gap-10 sm:gap-12 md:gap-16 pr-10 sm:pr-12 md:pr-16">
+                  {techList.map((t) => (
+                    <div 
+                      key={`g1-${t.name}`} 
+                      className="inline-flex items-center gap-4 sm:gap-5 md:gap-6 transition-transform duration-300 hover:scale-110"
+                    >
+                      <div className="relative">
                         <img
                           src={t.src}
                           alt={t.name}
-                          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain"
+                          className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain filter brightness-0 invert-0 dark:brightness-0 dark:invert"
                           loading="lazy"
                           decoding="async"
                           onError={(e) => {
                             const el = e.currentTarget as HTMLImageElement;
                             el.onerror = null;
-                            el.src =
-                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='100%25' height='100%25' fill='%23eee'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='14' fill='%23999'%3EICON%3C/text%3E%3C/svg%3E";
+                            el.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='100%25' height='100%25' fill='%23eee'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='14' fill='%23999'%3EICON%3C/text%3E%3C/svg%3E";
                           }}
                         />
-                        <span className="text-sm sm:text-base font-medium tracking-tight text-foreground/90">
-                          {t.name}
-                        </span>
                       </div>
-                    ))}
-                  </div>
-                  {/* Group 2 (duplicate for seamless loop) */}
-                  <div
-                    className="flex items-center gap-8 sm:gap-10 md:gap-12 pr-8 sm:pr-10 md:pr-12"
-                    aria-hidden="true"
-                  >
-                    {techList.map((t) => (
-                      <div
-                        key={`g2-${t.name}`}
-                        className="marquee__item inline-flex items-center gap-3 sm:gap-4 md:gap-5"
-                      >
+                      <span className="text-base sm:text-lg md:text-xl font-medium text-foreground whitespace-nowrap">
+                        {t.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {/* Group 2 (duplicate for seamless loop) */}
+                <div
+                  className="flex items-center gap-10 sm:gap-12 md:gap-16 pr-10 sm:pr-12 md:pr-16"
+                  aria-hidden="true"
+                >
+                  {techList.map((t) => (
+                    <div 
+                      key={`g2-${t.name}`} 
+                      className="inline-flex items-center gap-4 sm:gap-5 md:gap-6 transition-transform duration-300 hover:scale-110"
+                    >
+                      <div className="relative">
                         <img
                           src={t.src}
                           alt={t.name}
-                          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain"
+                          className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain filter brightness-0 invert-0 dark:brightness-0 dark:invert"
                           loading="lazy"
                           decoding="async"
                         />
-                        <span className="text-sm sm:text-base font-medium tracking-tight text-foreground/90">
-                          {t.name}
-                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <span className="text-base sm:text-lg md:text-xl font-medium text-foreground whitespace-nowrap">
+                        {t.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              </div>
-
-              {/* subtle caption row */}
-              <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  Icons shown for reference — your final build ships only the libraries you use.
-                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      {/* ---- /Tools Used ---- */}
+      {/* ---- /Tools Used Section ---- */}
     </div>
   );
 };
