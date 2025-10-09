@@ -341,14 +341,14 @@ const Products = () => {
                   Icons shown for reference — your final build ships only the libraries you use.
                 </p>
               </div>
-              <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
+            </div>
+          </div>
+        </div>
+        <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-border/30 text-center">
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   * prices may vary according to the style and size of the portfolio.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   );
