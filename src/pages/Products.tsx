@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ExternalLink,
@@ -18,6 +18,9 @@ import Navbar from "@/components/Navbar";
  */
 
 const Products = () => {
+  // ---------- NEW: state for category filter ----------
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
   // Normalized styles (no scrollbar overrides)
   const styles = `
   :root { --marquee-speed: 28s; }
@@ -147,6 +150,7 @@ const Products = () => {
     },
   ];
 
+  // Counts for badges
   const counts = portfolioSamples.reduce<Record<string, number>>((acc, p) => {
     acc.All = (acc.All || 0) + 1;
     acc[p.category] = (acc[p.category] || 0) + 1;
@@ -177,6 +181,12 @@ const Products = () => {
     { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
     { name: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   ];
+
+  // ---------- NEW: memoized filtered list ----------
+  const filteredPortfolios = useMemo(() => {
+    if (selectedCategory === "All") return portfolioSamples;
+    return portfolioSamples.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory, portfolioSamples]);
 
   return (
     <div className="min-h-screen">
@@ -216,26 +226,34 @@ const Products = () => {
         {/* Filters */}
         <section className="px-4 sm:px-6 lg:px-8 mb-12">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
-              <Button
-                key={category.name}
-                variant={index === 0 ? "default" : "outline"}
-                className={`glass-button ${index === 0 ? "bg-gradient-primary text-white" : ""}`}
-              >
-                {category.icon}
-                <span className="ml-2">{category.name}</span>
-                <Badge variant="secondary" className="ml-2">
-                  {category.count}
-                </Badge>
-              </Button>
-            ))}
+            {categories.map((category) => {
+              const isActive = selectedCategory === category.name;
+              return (
+                <Button
+                  key={category.name}
+                  variant={isActive ? "default" : "outline"}
+                  className={`glass-button ${isActive ? "bg-gradient-primary text-white" : ""}`}
+                  onClick={() => setSelectedCategory(category.name)}
+                  aria-pressed={isActive}
+                >
+                  {category.icon}
+                  <span className="ml-2">{category.name}</span>
+                  <Badge
+                    variant={isActive ? "secondary" : "outline"}
+                    className={`ml-2 ${isActive ? "" : "border-primary/20 text-primary"}`}
+                  >
+                    {category.count}
+                  </Badge>
+                </Button>
+              );
+            })}
           </div>
         </section>
 
         {/* Portfolio Cards */}
         <section className="px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-            {portfolioSamples.map((portfolio) => (
+            {filteredPortfolios.map((portfolio) => (
               <Card
                 key={portfolio.id}
                 className="glass-card border-0 hover-lift hover-glow group overflow-hidden h-[600px]"
@@ -253,7 +271,7 @@ const Products = () => {
                   <p className="text-muted-foreground text-lg">
                     {portfolio.role}
                   </p>
-                  {/* Category badge removed on purpose */}
+                  {/* Category badge intentionally hidden */}
                 </CardHeader>
                 <CardContent className="p-6 pt-0">
                   <p className="text-muted-foreground mb-6 text-center">{portfolio.description}</p>
@@ -278,6 +296,13 @@ const Products = () => {
                 </CardContent>
               </Card>
             ))}
+
+            {/* Optional empty-state when no items match */}
+            {filteredPortfolios.length === 0 && (
+              <div className="col-span-full text-center text-muted-foreground">
+                No portfolios in “{selectedCategory}”.
+              </div>
+            )}
           </div>
         </section>
 
