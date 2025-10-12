@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Brain,
   FileText,
@@ -35,12 +35,12 @@ const GITHUB_URL = "https://github.com/MasanamKesava";
 
 const Index = () => {
   const navigate = useNavigate();
-  
+  const location = useLocation();
+
   // Scroll to top whenever route changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
-
 
   const [timeLeft, setTimeLeft] = useState({
     days: 5,
@@ -726,6 +726,7 @@ const Index = () => {
                     Resume Builder
                   </Link>
                 </li>
+                {/* Removed "AI Tools" */}
                 <li>
                   <Link
                     to="/products"
@@ -734,6 +735,7 @@ const Index = () => {
                     Portfolio
                   </Link>
                 </li>
+                {/* Removed "Pricing" */}
                 <li>
                   <Link
                     to="/contact"
