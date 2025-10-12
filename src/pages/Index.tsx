@@ -728,26 +728,10 @@ const Index = () => {
                 </li>
                 <li>
                   <Link
-                    to="#"
-                    className="text-muted-foreground hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
-                  >
-                    AI Tools
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     to="/products"
                     className="text-muted-foreground hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
                   >
                     Portfolio
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="#pricing"
-                    className="text-muted-foreground hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
-                  >
-                    Pricing
                   </Link>
                 </li>
                 <li>
