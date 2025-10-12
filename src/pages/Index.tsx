@@ -35,6 +35,12 @@ const GITHUB_URL = "https://github.com/MasanamKesava";
 
 const Index = () => {
   const navigate = useNavigate();
+  
+  // Scroll to top whenever route changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
+
 
   const [timeLeft, setTimeLeft] = useState({
     days: 5,
