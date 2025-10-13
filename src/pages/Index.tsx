@@ -794,7 +794,9 @@ const Index = () => {
                   <br />
                   Mon - Fri: 9:00 AM - 6:00 PM
                   <br />
-                  Sat - Sun: 10:00 AM - 4:00 PM
+                  Sat : 10:00 AM - 4:00 PM
+                  <br />
+                  Sun : Closed
                 </div>
               </div>
             </div>
