@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import ScrollToTop from "@/components/ScrollToTop"; // ⬅️ add this
+import ScrollToTop from "@/src/pages/ScrollToTop"; // ⬅️ add this  
 
 import Index from "./pages/Index";
 import Products from "./pages/Products";
