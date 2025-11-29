@@ -88,7 +88,7 @@ const Products = () => {
         "EF Core",
         "OAuth2",
       ],
-      live: "https://harshini-adusumilli-portfolio.vercel.app/",
+      live: "",
       gradient: "from-blue-500 to-purple-600",
     },
     {
