@@ -182,7 +182,7 @@ function ImagePreviewModal({
 
 const ResumeBuilder = () => {
   const driveUrl =
-    "https://drive.google.com/drive/folders/1tbzQFRj5RSbcdUdDYDnqLH8--n0G36Ih?usp=drive_link";
+    "https://1024terabox.com/s/1_RrakjTPoRbcFFNXCvvCsA";
 
   const resumeTemplates = useMemo(
     () => [
