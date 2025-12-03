@@ -211,7 +211,7 @@ const Products = () => {
               </p>
               <Button asChild className="bg-gradient-primary hover:opacity-90 text-white shadow-glow">
                 <a
-                  href="https://drive.google.com/drive/folders/1SxebnMofr8TcnM2eDkcMIxGcQG0Y-0uC?usp=sharing"
+                  href="https://1024terabox.com/s/1C51AQA7ClokAqiR_LV7Jfg"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
